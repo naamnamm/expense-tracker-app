@@ -66,6 +66,7 @@ function getDate() {
         day: '2-digit'
     });
 
+    //to fix this!!!
     var dateString = formatter.formatToParts(date).map(({type, value}) => { 
         switch (type) {
           case 'dayPeriod': return `<b>${value}</b>`; 
@@ -108,30 +109,34 @@ let filterInput = document.getElementById('filter');
 filterInput.addEventListener('change', filterExpense)
 
 function filterExpense (e) {
-    //log(e.target.value);
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    log(table);
+    //let rows = table.getElementsByTagName('tr');
+
     let filteredCatagory = e.target.value;
+
+    //forEach
+    // Array.from(rows).forEach(function(row) {
+    //     let catagory = row.lastElementChild.previousElementSibling.innerText;
+    //         if (catagory === filteredCatagory) {
+    //             row.style.display = 'table-row';
+    //         } else {
+    //             row.style.display = 'none';
+    //         }
+    //     }
+    // )
+
+    //for loop
     for (let row of table.rows) {
-
-        for (let cell of row.cells ) {
-
-            if (cell.classList.contains('data-catagory') && 
-            cell.innerText === filteredCatagory) {
-                
-                log(cell.cellIndex);
-                log(cell);
-                log(row);
-                log(row.rowIndex);
-                log(table)
-                row.filter
-                
-            } else {
-                log('No!');
-
-            }
+        let catagory = row.lastElementChild.previousElementSibling.innerText;
+        if (catagory === filteredCatagory) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
         }
+                
+    } 
 
-
-    }
 }
+
+
+    
