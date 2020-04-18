@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    background-color: #b69b7d;
+}
+
+.logo {
+    height: 100px;
+    color: black;
+}
+
+form {
+    color: white;
+}
+
+.white {
+    color: white;
+}
+
+.form-container {
+    margin-top: 20px;
+    background-color: #b69b7d;
+}
+
+    .form-header, .form-content {
+        width: 1000px;
+        margin: 0 auto;
+        border: 1px solid whitesmoke;
+        background-color: #231F20;
+    }
+
+    .form-content {
+        padding: 20px 0;
+        font-size: 20px;
+    }
+        .form-header {
+            text-align: center;
+        }
+
+        .content-parent-1, .content-parent-2, .content-parent-3, .content-parent-4 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+        }
+
+            .content-child-1, .content-child-2 {
+                margin: 10px;
+                border: 1px solid red; 
+            }
+    
+            .content-child-3, .content-child-4 {
+                margin: 10px;
+                border: 1px solid red; 
+            }
+
+            #add-button {
+                margin: 10px 0;
+                background-color: #b69b7d;;
+            }
+
+.table-container {
+    margin: 0 auto;
+    width: 1000px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+    .filter-container {
+        margin: 20px auto;
+        width: 800px;
+        border: 1px solid black;
+        padding: 10px 0;
+    }
+
+        .filter-catagory {
+            margin-right: 20px;
+        }
+
+
+    table {
+        border-collapse: collapse;
+        margin: 30px auto;
+    }
+
+    th, td {
+        border: 1px solid black;
+    }
+
+        .header-date, .data-date {
+            width: 100px;
+            padding: 10px;
+        }
+
+        .header-description, .data-description {
+            width: 200px;
+            padding: 10px;
+        }
+
+        .header-location, .data-location {
+            width: 150px;
+            padding: 10px;
+        }
+
+        .header-catagory, .data-catagory {
+            width: 150px;
+            padding: 10px;
+        }
+
+        .header-amount, .data-amount {
+            width: 100px;
+            padding: 10px;
+        }
+
+        .default-data {
+            padding: 10px;
+            text-align: center;
+        }
