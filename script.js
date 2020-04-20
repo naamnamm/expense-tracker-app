@@ -50,7 +50,7 @@ function addExpense(e) {
     //grab dollar amount
     let amount = document.getElementById('amount').value;
     let displayAmount= document.getElementsByClassName('data-amount')[0];
-    displayAmount.innerText = `$ ${amount}`;
+    displayAmount.innerText = `$${amount}`;
 
     //remove default row
     removeDefaultRow();
@@ -62,42 +62,76 @@ function addExpense(e) {
 
 function addTotalRow() {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    let rows = document.getElementById('table-main').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    let rows = table.getElementsByTagName('tr');
+
     log(rows)
     
+    // insert total row
     log(Array.from(rows));
+    
     let rowArray = Array.from(rows)
-    if (rowArray.length >= 1) {
-        let lastRow = table.insertRow(-1);
+    let amountArray = []
+    rowArray.forEach(function (row) {
+        //push amount [20, 30] 
+        let amountString = row.lastElementChild.innerText;
+        let amount = Number(amountString.replace(/[^0-9.-]+/g,""));
+        amountArray.push(amount);           
+        log(amountArray);
+    });
+    
+    //if amountArray.length > 1 - pop last index
+    // if (amountArray.length > 1) {
+    //     amountArray.pop();
+    //     log(amountArray);
+    // }
+
+    //reduce it to total cell
+    let total = amountArray.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue;
+    }, 0)
+
+    log(total);
+
+    if (rowArray.length === 1) {
+        let footer = document.getElementById('table-main').getElementsByTagName('tfoot')[0];
+        let lastRow = footer.insertRow(0);
 
         let lastRowTd1 = lastRow.insertCell(0);
         let lastRowTd2 = lastRow.insertCell(1);
         
-        lastRowTd1.setAttribute('colspan', '4')
+        lastRowTd1.setAttribute('colspan', '4');
         lastRowTd1.innerHTML = 'Total';
-        lastRowTd1.className = 'last-row';
+        lastRowTd1.className = 'last-row';  
         lastRowTd2.className = 'last-row';
+        lastRowTd2.id = 'total';
     }
 
-    //calculate total
-    //if rowArray.length >= 1
-    
     //grab lastRowTd2
+    let totalCell = document.getElementById('total');
+    totalCell.innerText = `$${total}`;
+    
+    //calculate total
+    // grab amount
+    // let amount = rowArray.lastElemen
+    // let amountString = rowArray.lastElementChild.innerText;
+    // let amount = parseFloat(amountString);
+    // log(amount);
+    //if rowArray.length >= 1
 
-    //grab value of lastsibling of rowArray;
+    // for (let row of table.rows) {
+    //     if (row.length === 1)  {
+    //         let lastRow = table.insertRow(-1);
 
-    //reduce method to sum all value
-
-
-
-    //calculateTotal(rowArray);
+    //         let lastRowTd1 = lastRow.insertCell(0);
+    //         let lastRowTd2 = lastRow.insertCell(1);
+        
+    //         lastRowTd1.setAttribute('colspan', '4');
+    //         lastRowTd1.innerHTML = 'Total';
+    //         lastRowTd1.className = 'last-row';  
+    //         lastRowTd2.className = 'last-row'; 
+    //     }
     
 }
-
-// function calculateTotal(rowArray) {
-//     if (rowArray )
-
-// }
 
 function getDate() {
     let date = new Date(document.getElementById('date').value);
@@ -137,14 +171,6 @@ function removeDefaultRow() {
         } 
     }
 }
-
-// log(document.getElementById('expense-content').firstElementChild);
-// log(document.getElementById('expense-content').nextElementSibling);
-// log(document.getElementsByClassName('first-expense-row'));
-
-// function renderTable() {
-
-// }
 
 //grab target input
 let filterInput = document.getElementById('filter');
