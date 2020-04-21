@@ -5,6 +5,8 @@ let addButton = document.getElementById('add-button');
 
 addButton.addEventListener('click', addExpense);
 
+let isChecked = false;
+
 function addExpense(e) {
     log(e.type);
     e.preventDefault();
@@ -15,42 +17,40 @@ function addExpense(e) {
     let tr = tbody.insertRow(0)
     
     //create td
-    let td1 = tr.insertCell(0);
-    let td2 = tr.insertCell(1);
-    let td3 = tr.insertCell(2);
-    let td4 = tr.insertCell(3);
-    let td5 = tr.insertCell(4);
+    let td0 = tr.insertCell(0);
+    let td1 = tr.insertCell(1);
+    let td2 = tr.insertCell(2);
+    let td3 = tr.insertCell(3);
+    let td4 = tr.insertCell(4);
+    let td5 = tr.insertCell(5);
+
+    td0.classList = 'checkbox'
+    let checkbox = document.createElement('input');
+    checkbox.id = 'checkbox';
+    checkbox.setAttribute("type", "checkbox");
+    td0.appendChild(checkbox);
+    checkbox.addEventListener('click', (e) => {
+        isChecked = checkbox.checked;
+        log(isChecked)
+        }
+    );
 
     td1.classList = 'data-date';
+    td1.innerText = getDate();
+
     td2.classList = 'data-description';
+    td2.innerText = document.getElementById('location').value;
+
     td3.classList = 'data-location';
-    td4.classList = 'data-catagory';
+    td3.innerText = document.getElementById('description').value;
+
+    let catagory = document.getElementById('catagory').value;
+    td4.classList = `data-catagory ${catagory} all`;
+    td4.innerText = `${catagory}`;
+
     td5.classList = 'data-amount';
-
-    //grab value from date input
-    let displayDate = document.getElementsByClassName('data-date')[0];
-    displayDate.innerText = getDate();
-
-    //grab value from location input
-    let locationText = document.getElementById('location').value;
-    let displayLocation = document.getElementsByClassName('data-location')[0];
-    displayLocation.innerText = locationText;
-
-    //grab value from description
-    let descriptionText = document.getElementById('description').value;
-    let displayDescription = document.getElementsByClassName('data-description')[0];
-    displayDescription.innerText = descriptionText;
-
-    //grab value from catagory
-    let descriptionCatagory = document.getElementById('catagory').value;
-    let displayCatagory = document.getElementsByClassName('data-catagory')[0];
-    displayCatagory.innerText = descriptionCatagory;
-    displayCatagory.classList = `data-catagory ${descriptionCatagory} all`;
-
-    //grab dollar amount
     let amount = document.getElementById('amount').value;
-    let displayAmount= document.getElementsByClassName('data-amount')[0];
-    displayAmount.innerText = `$${amount}`;
+    td5.innerText = `$${amount}`;
 
     //remove default row
     removeDefaultRow();
@@ -58,6 +58,24 @@ function addExpense(e) {
     addTotalRow();
 
     clearField();
+}
+
+let deleteBtn = document.getElementById('delete-btn');
+
+deleteBtn.addEventListener('click', deleteExpense)
+
+function deleteExpense (e) {
+    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
+    //et rows = table.getElementsByTagName('tr');
+    //loop over all row
+    for (let row of table.rows) {
+        if (row.firstElementChild.firstElementChild.checked === true) {
+            log(row.rowIndex);
+            table.deleteRow(row.rowIndex);
+        }
+    }
+    //if any row has checkbox.checked
+    //delete the entire row
 }
 
 function addTotalRow() {
@@ -99,7 +117,7 @@ function addTotalRow() {
         let lastRowTd1 = lastRow.insertCell(0);
         let lastRowTd2 = lastRow.insertCell(1);
         
-        lastRowTd1.setAttribute('colspan', '4');
+        lastRowTd1.setAttribute('colspan', '5');
         lastRowTd1.innerHTML = 'Total';
         lastRowTd1.className = 'last-row';  
         lastRowTd2.className = 'last-row';
@@ -132,6 +150,9 @@ function addTotalRow() {
     //     }
     
 }
+
+//grab target checkbox
+
 
 function getDate() {
     let date = new Date(document.getElementById('date').value);
@@ -179,12 +200,29 @@ filterInput.addEventListener('change', filterExpense)
 
 function filterExpense (e) {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    //let rows = table.getElementsByTagName('tr');
 
     let filteredCatagory = e.target.value;
     log(filteredCatagory);
 
-    //forEach
+    let total = 0;
+    //for loop
+    for (let row of table.rows) {
+        let catagoryCell = row.lastElementChild.previousElementSibling;
+        let amount = Number(row.lastElementChild.innerText.replace(/[^0-9.-]+/g,""))
+        if (catagoryCell.classList.contains(filteredCatagory)) {
+            row.style.display = 'table-row';
+            total += amount
+            
+        } else {
+            row.style.display = 'none';
+        } 
+    }
+    log(total);
+
+    let totalCell = document.getElementById('total');
+    totalCell.innerText = `$${total}`;
+
+     //forEach
     // Array.from(rows).forEach(function(row) {
     //     let catagory = row.lastElementChild.previousElementSibling.innerText;
     //         if (catagory === filteredCatagory) {
@@ -194,47 +232,9 @@ function filterExpense (e) {
     //         }
     //     }
     // )
-
-    //for loop
-    // for (let row of table.rows) {
-    //     let catagory = row.lastElementChild.previousElementSibling.innerText;
-        
-    //     if (catagory === filteredCatagory) {
-    //         row.style.display = 'table-row';
-
-    //     } else {
-    //         row.style.display = 'none';
-    //     }
+}    
                 
-    // } 
-
-     //for loop
-     for (let row of table.rows) {
-        let catagoryCell = row.lastElementChild.previousElementSibling;
-        
-        if (catagoryCell.classList.contains(filteredCatagory)) {
-            row.style.display = 'table-row';
-
-        } else {
-            row.style.display = 'none';
-        }
-                
-    } 
-    //add catarogy with class 'catagory all'
-
-    //if fourth child.classlist.contains(filtered)
-    //display = table row.
-
-    //else 
-    //display - none
-
-    //https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_elements
-    
-    // if catagory === select // exit the loop >> display all rows
-    //Can I use break statement?
-    
-}
+   
 
 
-//if add new expense > display all 
-//total function > reduce method?
+

@@ -88,7 +88,15 @@ form {
 
     tbody > tr:nth-child(odd) {
         background-color: #f2f2f2;
-      }
+    }
+
+        .header-delete, .checkbox {
+            padding: 0 10px;
+        }
+
+        #checkbox, #delete-btn {
+            cursor: pointer;
+        }
 
         .header-date, .data-date {
             width: 100px;
