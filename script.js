@@ -2,10 +2,13 @@
 let log = console.log
 
 let addButton = document.getElementById('add-button');
-
 addButton.addEventListener('click', addExpense);
 
-let isChecked = false;
+let deleteBtn = document.getElementById('delete-btn');
+deleteBtn.addEventListener('click', deleteExpense)
+
+let filterInput = document.getElementById('filter');
+filterInput.addEventListener('change', filterExpense)
 
 function addExpense(e) {
     log(e.type);
@@ -29,11 +32,6 @@ function addExpense(e) {
     checkbox.id = 'checkbox';
     checkbox.setAttribute("type", "checkbox");
     td0.appendChild(checkbox);
-    checkbox.addEventListener('click', (e) => {
-        isChecked = checkbox.checked;
-        log(isChecked)
-        }
-    );
 
     td1.classList = 'data-date';
     td1.innerText = getDate();
@@ -56,61 +54,46 @@ function addExpense(e) {
     removeDefaultRow();
 
     addTotalRow();
+    
+    calculateTotal();
 
     clearField();
 }
 
-let deleteBtn = document.getElementById('delete-btn');
-
-deleteBtn.addEventListener('click', deleteExpense)
-
 function deleteExpense (e) {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    //et rows = table.getElementsByTagName('tr');
-    //loop over all row
+    //let rows = table.getElementsByTagName('tr');
+
     for (let row of table.rows) {
         if (row.firstElementChild.firstElementChild.checked === true) {
-            log(row.rowIndex);
-            table.deleteRow(row.rowIndex);
+            table.removeChild(row);
+            log(table.rows.length);
         }
     }
-    //if any row has checkbox.checked
-    //delete the entire row
+
+    calculateTotal();
+
+    removeTotalRow();
+}
+
+function calculateTotal() {
+    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
+    let rows = table.getElementsByTagName('tr');
+
+    let total = 0;
+    Array.from(rows).forEach((row) => {
+        let amountString = row.lastElementChild.innerText;
+        let amount = Number(amountString.replace(/[^0-9.-]+/g,""));
+        total += amount          
+    });
+    document.getElementById('total').innerText = `$${total}`;
 }
 
 function addTotalRow() {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
     let rows = table.getElementsByTagName('tr');
 
-    log(rows)
-    
-    // insert total row
-    log(Array.from(rows));
-    
-    let rowArray = Array.from(rows)
-    let amountArray = []
-    rowArray.forEach(function (row) {
-        //push amount [20, 30] 
-        let amountString = row.lastElementChild.innerText;
-        let amount = Number(amountString.replace(/[^0-9.-]+/g,""));
-        amountArray.push(amount);           
-        log(amountArray);
-    });
-    
-    //if amountArray.length > 1 - pop last index
-    // if (amountArray.length > 1) {
-    //     amountArray.pop();
-    //     log(amountArray);
-    // }
-
-    //reduce it to total cell
-    let total = amountArray.reduce(function (accumulator, currentValue) {
-        return accumulator + currentValue;
-    }, 0)
-
-    log(total);
-
-    if (rowArray.length === 1) {
+    if (Array.from(rows).length === 1) {
         let footer = document.getElementById('table-main').getElementsByTagName('tfoot')[0];
         let lastRow = footer.insertRow(0);
 
@@ -123,55 +106,31 @@ function addTotalRow() {
         lastRowTd2.className = 'last-row';
         lastRowTd2.id = 'total';
     }
-
-    //grab lastRowTd2
-    let totalCell = document.getElementById('total');
-    totalCell.innerText = `$${total}`;
-    
-    //calculate total
-    // grab amount
-    // let amount = rowArray.lastElemen
-    // let amountString = rowArray.lastElementChild.innerText;
-    // let amount = parseFloat(amountString);
-    // log(amount);
-    //if rowArray.length >= 1
-
-    // for (let row of table.rows) {
-    //     if (row.length === 1)  {
-    //         let lastRow = table.insertRow(-1);
-
-    //         let lastRowTd1 = lastRow.insertCell(0);
-    //         let lastRowTd2 = lastRow.insertCell(1);
-        
-    //         lastRowTd1.setAttribute('colspan', '4');
-    //         lastRowTd1.innerHTML = 'Total';
-    //         lastRowTd1.className = 'last-row';  
-    //         lastRowTd2.className = 'last-row'; 
-    //     }
-    
 }
 
-//grab target checkbox
-
-
 function getDate() {
-    let date = new Date(document.getElementById('date').value);
+    let date = new Date(`${document.getElementById('date').value}T00:00`);
     
-    let formatter = new Intl.DateTimeFormat('en-us', {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit'
-    });
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
 
-    //to fix this!!!
-    var dateString = formatter.formatToParts(date).map(({type, value}) => { 
-        switch (type) {
-          case 'dayPeriod': return `<b>${value}</b>`; 
-          default : return value; 
-        } 
-      }).reduce((string, part) => string + part);
-
-    return dateString;
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ]
+    
+    return `${months[month]} ${day}, ${year}`
 }
 
 function clearField() {
@@ -193,16 +152,10 @@ function removeDefaultRow() {
     }
 }
 
-//grab target input
-let filterInput = document.getElementById('filter');
-
-filterInput.addEventListener('change', filterExpense)
-
 function filterExpense (e) {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
 
     let filteredCatagory = e.target.value;
-    log(filteredCatagory);
 
     let total = 0;
     //for loop
@@ -234,7 +187,36 @@ function filterExpense (e) {
     // )
 }    
                 
-   
+function removeTotalRow() {
+    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
+    let rows = table.getElementsByTagName('tr');
+
+    if (Array.from(rows).length === 0) {
+        let footer = document.getElementById('table-main').getElementsByTagName('tfoot')[0];
+
+        footer.removeChild(footer.firstElementChild);
+    }
+    renderDefaultRow();
+}
+
+function renderDefaultRow() {
+    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
+    let rows = table.getElementsByTagName('tr');
+
+    if (Array.from(rows).length === 0) {
+        let tbody = document.getElementById('expense-content');
+
+        //create tr
+        let tr = tbody.insertRow(0)
+        tr.className = 'default-row';
+
+        //create td
+        let td0 = tr.insertCell(0);
+        td0.setAttribute('colspan', '6')
+        td0.className = 'default-data';
+        td0.innerText = 'Add your expense here';
+    }
+}
 
 
 
