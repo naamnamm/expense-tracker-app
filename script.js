@@ -102,48 +102,35 @@ function renderTable(expense) {
 
 function deleteExpense (e) {
     let rows = document.getElementById('expense-content').getElementsByTagName('tr');
-    //remove multiple items - splice selected index(items)
+    //--remove multiple items 
+    //create empty array []
+    //push selected checkbox to empty array
     //loop through to get index of selected item
-    
-    for (let i =0; i < Array.from(rows).length; i++) {
-        //log(i);
-        //log(Array.from(rows)[i]);
-        if (Array.from(rows)[i].firstElementChild.firstElementChild.checked === true) {
-            log(i);
-            Array.from(rows).splice(i);
-            
+
+    //--remove single item
+    Array.from(rows).forEach( row => {
+        if (row.firstElementChild.firstElementChild.checked === true) {
+            row.remove();
         }
-        log(Array.from(rows));
-    }
+    })
+    log(Array.from(rows));
 
+    //push current id
+    let arrayOfCurrentId = [];
+    Array.from(rows).forEach( row => {
+        arrayOfCurrentId.push(Number(row.id));
+        }
+    )
 
-//------------------------------------    
-    // //remove single item
-    // Array.from(rows).forEach( row => {
-    //     if (row.firstElementChild.firstElementChild.checked === true) {
-    //         row.remove();
-    //     }
-    // })
-    // log(Array.from(rows));
+    let savedExpense = JSON.parse(localStorage.getItem('Expense-List'));
 
-    // //push current id
-    // let arrayOfCurrentId = [];
-    // Array.from(rows).forEach( row => {
-    //     arrayOfCurrentId.push(Number(row.id));
-    //     }
-    // )
+    let filtered = savedExpense.filter(item => (arrayOfCurrentId.indexOf(item.id) >= 0));
 
-    // let savedExpense = JSON.parse(localStorage.getItem('Expense-List'));
+    localStorage.setItem('Expense-List', JSON.stringify(filtered));
 
-    // //let filtered = savedExpense.filter(item => arrayOfCurrentId.includes(item.id));
-    // let filtered = savedExpense.filter(item => (arrayOfCurrentId.indexOf(item.id) >= 0));
-    // //https://stackoverflow.com/questions/34901593/how-to-filter-an-array-from-all-elements-of-another-array
+    calculateTotal();
 
-    // localStorage.setItem('Expense-List', JSON.stringify(filtered));
-
-    // calculateTotal();
-
-    // removeTotalRow();
+    removeTotalRow();
 }
 
 function calculateTotal() {
