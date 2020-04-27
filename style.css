@@ -149,6 +149,13 @@ form {
 
         .expense-filter {
             margin: 0 10px;
+            font-family: 'Manrope', sans-serif; 
+            font-weight: 500;
+        }
+
+        .clear-all {
+            float: right;
+            right: 10px;
         }
 
 
@@ -174,7 +181,7 @@ form {
         }
 
         .header-date, .data-date {
-            width: 100px;
+            width: 130px;
             padding: 10px;
         }
 
@@ -189,12 +196,12 @@ form {
         }
 
         .header-catagory, .data-catagory {
-            width: 150px;
+            width: 140px;
             padding: 10px;
         }
 
         .header-amount, .data-amount {
-            width: 100px;
+            width: 80px;
             padding: 10px;
         }
 

@@ -8,20 +8,6 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <header>
-        <div class="fa fa-neos fa-3x"></div>
-        <div class="fa fa-angle-double-up fa-3x"> </div>
-        <i class="fa fa-times-circle fa-3x"></i>
-        <i class="fa fa-dollar-sign fa-3x"></i> 
-        <i class="fa fa-money-check-alt fa-3x"></i>
-        <i class="fa fa-credit-card fa-3x"></i>
-        <i class="fa fa-calendar-check"></i>
-        <i class="fa fa-check-square fa-3x"></i>
-        <i class="fa fa-trash fa-3x"></i>
-        <i class="fa fa-check-square fa-3x white"></i>
-        <i class="fa fa-square fa-3x white"></i>
-    </header> 
-
     <form class='form-container'>
         <div class='form-header'>
             <h1>Expense Tracker</h1> 
@@ -31,7 +17,7 @@
             <div class='content-parent-1'>
                 <div class='content-child-0'>
                     <label for='date'> Date: </label>
-                    <input id="date" type='date' name="date"/>
+                    <input id="date" type='date' name="date" required/>
                 </div>
             </div>
 
@@ -88,6 +74,8 @@
                 <option value="ultilities">Utilities</option>
                 <option value="miscellaneous">Miscellaneous</option>
             </select> 
+
+            <button id='clear-all' class='clear-all'> clear all </button>
         </div>
 
         <table id='table-main'>

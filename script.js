@@ -1,5 +1,3 @@
-//to prevent add button when date, catagory, amount not selected/filled
-
 let log = console.log
 
 let addButton = document.getElementById('add-button');
@@ -10,6 +8,22 @@ deleteBtn.addEventListener('click', deleteExpense)
 
 let filterInput = document.getElementById('filter');
 filterInput.addEventListener('change', filterExpense)
+
+let clearAllBtn = document.getElementById('clear-all');
+clearAllBtn.addEventListener('click', clearAllExpenses);
+
+function clearAllExpenses(e) {
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
+    let response = confirm('You are about to delete all expense. Are you sure?');
+
+    if (response === true) {
+        Array.from(rows).forEach( row => row.remove())
+        
+        removeTotalRow();
+        renderDefaultRow();
+        localStorage.clear();
+    } 
+}
 
 function addExpense(e) {
     e.preventDefault();
@@ -23,25 +37,33 @@ function addExpense(e) {
         amount: document.getElementById('amount').value
     }
 
-    if (expense.catagory === 'select' || expense.amount === '') {
+    if (expense.date === 'undefined NaN, NaN' || expense.catagory === 'select' || expense.amount === '') {
         return;
     }
 
     renderExpense(expense);
 
-    // save this to local storage
     let expenses = JSON.parse(localStorage.getItem('Expense-List')) || [];
     expenses.push(expense);
     localStorage.setItem('Expense-List', JSON.stringify(expenses));
 
-    //remove default row
     removeDefaultRow();
 
     addTotalRow();
     
     calculateTotal();
 
-    //reset the form
+    //if filter is on - if filter doesn't match > display none
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
+    let filteredCatagory = document.getElementById('filter').value;
+    Array.from(rows).forEach(row => {
+        if (row.lastElementChild.previousElementSibling.classList.contains(filteredCatagory)) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
     document.querySelector('form').reset();
 }
 
@@ -76,15 +98,11 @@ function renderExpense(expense) {
     td3.classList = 'data-location';
     td3.innerText = expense.location;
 
-    //let catagory = document.getElementById('catagory').value;
     td4.classList = `data-catagory ${expense.catagory} all`;
     td4.innerText = `${expense.catagory}`;
 
     td5.classList = 'data-amount';
-    //let amount = document.getElementById('amount').value;
     td5.innerText = `$${expense.amount}`;
-
-    return expense;
 }
 
 const savedExpense = JSON.parse(localStorage.getItem('Expense-List'));
@@ -106,7 +124,6 @@ function deleteExpense (e) {
             row.remove();
         }
     })
-    log(Array.from(rows));
 
     //push current id
     let arrayOfCurrentId = [];
@@ -124,25 +141,25 @@ function deleteExpense (e) {
     calculateTotal();
 
     removeTotalRow();
-
 }
 
 function calculateTotal() {
-    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    let rows = table.getElementsByTagName('tr');
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
+    let filteredCatagory = document.getElementById('filter').value;
 
     let total = 0;
     Array.from(rows).forEach((row) => {
-        let amountString = row.lastElementChild.innerText;
-        let amount = Number(amountString.replace(/[^0-9.-]+/g,""));
-        total += amount          
-    });
+        let amount = Number(row.lastElementChild.innerText.replace(/[^0-9.-]+/g,""))
+        if (row.lastElementChild.previousElementSibling.classList.contains(filteredCatagory)) {
+            total += amount; 
+            }
+        }        
+    );
     document.getElementById('total').innerText = `$${total}`;
 }
 
 function addTotalRow() {
-    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    let rows = table.getElementsByTagName('tr');
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
 
     if (Array.from(rows).length === 1) {
         let footer = document.getElementById('table-main').getElementsByTagName('tfoot')[0];
@@ -161,7 +178,7 @@ function addTotalRow() {
 
 function getDate() {
     let date = new Date(`${document.getElementById('date').value}T00:00`);
-    
+
     let day = date.getDate();
     let month = date.getMonth();
     let year = date.getFullYear();
@@ -186,8 +203,7 @@ function getDate() {
 
 function removeDefaultRow() {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    log(table);
-    log(typeof table);
+
     for (let row of table.rows) {
         if (row.classList.contains('default-row')) {
             row.remove();
@@ -196,58 +212,40 @@ function removeDefaultRow() {
 }
 
 function filterExpense (e) {
-    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    let rows = table.getElementsByTagName('tr')
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
     let filteredCatagory = e.target.value;
 
-    let total = 0;
-     //forEach
-     Array.from(rows).forEach( row => {
+    Array.from(rows).forEach( row => {
         let catagoryCell = row.lastElementChild.previousElementSibling
-        log(filteredCatagory);
-        let amount = Number(row.lastElementChild.innerText.replace(/[^0-9.-]+/g,""))
             if (catagoryCell.classList.contains(filteredCatagory)) {
                 row.style.display = 'table-row';
-                total += amount
             } else {
                 row.style.display = 'none';
             }
         }
     )
-    log(total);
-    log(Array.from(rows));
-
-    let totalCell = document.getElementById('total');
-    totalCell.innerText = `$${total}`;
-    
-
-    // calculateTotal();
+    calculateTotal();
 }    
                 
 function removeTotalRow() {
-    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    let rows = table.getElementsByTagName('tr');
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
 
     if (Array.from(rows).length === 0) {
         let footer = document.getElementById('table-main').getElementsByTagName('tfoot')[0];
-
         footer.removeChild(footer.firstElementChild);
     }
     renderDefaultRow();
 }
 
 function renderDefaultRow() {
-    let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
-    let rows = table.getElementsByTagName('tr');
+    let rows = document.getElementById('expense-content').getElementsByTagName('tr');
 
     if (Array.from(rows).length === 0) {
         let tbody = document.getElementById('expense-content');
 
-        //create tr
         let tr = tbody.insertRow(0)
         tr.className = 'default-row';
 
-        //create td
         let td0 = tr.insertCell(0);
         td0.setAttribute('colspan', '6')
         td0.className = 'default-data';
