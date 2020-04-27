@@ -1,7 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
+
+
 body {
     margin: 0;
     background-color: #b69b7d;
 }
+
+h1 {
+    font-family: 'Manrope', sans-serif; 
+    letter-spacing: 0.1em;
+    font-weight: 600;
+} 
 
 .logo {
     height: 100px;
@@ -31,32 +40,98 @@ form {
     .form-content {
         padding: 20px 0;
         font-size: 20px;
+        font-family: 'Manrope', sans-serif; 
+        font-weight: 400;
+
     }
         .form-header {
             text-align: center;
         }
 
         .content-parent-1, .content-parent-2, .content-parent-3, .content-parent-4 {
+            width: 650px;
+            margin: 15px auto;
             display: flex;
-            justify-content: center;
             align-items: center;
             border: 1px solid black;
         }
 
-            .content-child-1, .content-child-2 {
-                margin: 10px;
-                border: 1px solid red; 
+        .content-parent-1, .content-parent-4 {
+            justify-content: center;
+        }
+
+            .content-child-3 > label {
+                margin-right: 22px;
             }
-    
-            .content-child-3, .content-child-4 {
-                margin: 10px;
-                border: 1px solid red; 
+            
+            .content-child-2 > label, .content-child-4 > label {
+                margin-left: 60px;
             }
 
+            .content-child-4 > label {
+                margin-right: 7px;
+            }
+
+            select {
+                width: 186.67px;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                background-color: #f1f1f1;
+                font-family: 'Manrope', sans-serif; 
+                font-weight: 500;
+              }
+
+            input[type=date] {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                background-color: #f1f1f1;
+                font-family: 'Manrope', sans-serif; 
+                font-weight: 500;
+            }
+
+            input[type=text] {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                background-color: #f1f1f1;
+                font-family: 'Manrope', sans-serif; 
+                font-weight: 500;
+            }
+
+            input[type=number] {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                background-color: #f1f1f1;
+                font-family: 'Manrope', sans-serif; 
+                font-weight: 500;
+            }
+            
             #add-button {
                 margin: 10px 0;
-                background-color: #b69b7d;;
+                background-color: #b69b7d;
+                border: none;
+                border-radius: 8px;;
+                padding: 16px 50px;
+                text-decoration: none;
+                margin: 4px 2px;
+                cursor: pointer;
+                font-family: 'Manrope', sans-serif; 
+                font-size: 16px;
+                font-weight: 600;
             }
+
+            #add-button:hover {
+                background-color: #a58d72;
+            }
+
+            #add-button:active {
+                background-color: #a58d72;
+                transform: translateY(4px);
+              }
+
 
 .table-container {
     margin: 0 auto;
@@ -67,13 +142,13 @@ form {
 
     .filter-container {
         margin: 20px auto;
-        width: 800px;
+        width: 846px;
         border: 1px solid black;
         padding: 10px 0;
     }
 
-        .filter-catagory {
-            margin-right: 20px;
+        .expense-filter {
+            margin: 0 10px;
         }
 
 

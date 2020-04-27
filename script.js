@@ -1,3 +1,4 @@
+//to prevent add button when date, catagory, amount not selected/filled
 
 let log = console.log
 
@@ -11,7 +12,6 @@ let filterInput = document.getElementById('filter');
 filterInput.addEventListener('change', filterExpense)
 
 function addExpense(e) {
-    log(e.type);
     e.preventDefault();
 
     const expense = {
@@ -21,6 +21,10 @@ function addExpense(e) {
         location: document.getElementById('location').value,
         catagory: document.getElementById('catagory').value,
         amount: document.getElementById('amount').value
+    }
+
+    if (expense.catagory === 'select' || expense.amount === '') {
+        return;
     }
 
     renderExpense(expense);
@@ -84,30 +88,19 @@ function renderExpense(expense) {
 }
 
 const savedExpense = JSON.parse(localStorage.getItem('Expense-List'));
-savedExpense.forEach(renderTable);
-
-function renderTable(expense) {
+savedExpense.forEach(expense => {
     if (savedExpense.length >= 1) {
         renderExpense(expense);
-        log(expense);
     }
-
     removeDefaultRow();
-
     addTotalRow();
-    
     calculateTotal();
-}
+});
 
 
 function deleteExpense (e) {
     let rows = document.getElementById('expense-content').getElementsByTagName('tr');
-    //--remove multiple items 
-    //create empty array []
-    //push selected checkbox to empty array
-    //loop through to get index of selected item
 
-    //--remove single item
     Array.from(rows).forEach( row => {
         if (row.firstElementChild.firstElementChild.checked === true) {
             row.remove();
@@ -131,6 +124,7 @@ function deleteExpense (e) {
     calculateTotal();
 
     removeTotalRow();
+
 }
 
 function calculateTotal() {
@@ -190,7 +184,6 @@ function getDate() {
     return `${months[month]} ${day}, ${year}`
 }
 
-
 function removeDefaultRow() {
     let table = document.getElementById('table-main').getElementsByTagName('tbody')[0];
     log(table);
@@ -211,6 +204,7 @@ function filterExpense (e) {
      //forEach
      Array.from(rows).forEach( row => {
         let catagoryCell = row.lastElementChild.previousElementSibling
+        log(filteredCatagory);
         let amount = Number(row.lastElementChild.innerText.replace(/[^0-9.-]+/g,""))
             if (catagoryCell.classList.contains(filteredCatagory)) {
                 row.style.display = 'table-row';
@@ -221,13 +215,13 @@ function filterExpense (e) {
         }
     )
     log(total);
+    log(Array.from(rows));
 
     let totalCell = document.getElementById('total');
     totalCell.innerText = `$${total}`;
+    
 
-    //if delete is executed > update total
-
-
+    // calculateTotal();
 }    
                 
 function removeTotalRow() {
@@ -263,15 +257,3 @@ function renderDefaultRow() {
 
 
 
-    //for loop for filter function
-    // for (let row of table.rows) {
-    //     let catagoryCell = row.lastElementChild.previousElementSibling;
-    //     let amount = Number(row.lastElementChild.innerText.replace(/[^0-9.-]+/g,""))
-    //     if (catagoryCell.classList.contains(filteredCatagory)) {
-    //         row.style.display = 'table-row';
-    //         total += amount
-            
-    //     } else {
-    //         row.style.display = 'none';
-    //     } 
-    // }
