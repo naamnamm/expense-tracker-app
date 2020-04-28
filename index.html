@@ -1,107 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <form class='form-container'>
-        <div class='form-header'>
-            <h1>Expense Tracker</h1> 
-        </div>
-
-        <div class='form-content'> 
-            <div class='content-parent-1'>
-                <div class='content-child-0'>
-                    <label for='date'> Date: </label>
-                    <input id="date" type='date' name="date" required/>
-                </div>
-            </div>
-
-            <div class='content-parent-2'>
-               <div class='content-child-1'>
-                    <label for='description'> Description: </label>
-                    <input id="description" type="text" name="description"/>
-               </div>
-
-               <div class='content-child-2'>
-                    <label for='location'> Location: </label>
-                    <input id="location" type='text' name='location'/>
-                </div>
-            </div>
-
-            <div class='content-parent-3'>
-                <div class='content-child-3'>
-                    <label for='expense-catagory'> Catagory: </label>
-                    <select name='expense-catagory' id='catagory'>
-                        <option value="select" >Select</option>
-                        <option value="entertainment">Entertainment</option>
-                        <option value="food">Food</option>
-                        <option value="housing">Housing</option>
-                        <option value="insurance-medical">Insurance & Medical</option>
-                        <option value="transporation">Transporation</option>
-                        <option value="ultilities">Utilities</option>
-                        <option value="miscellaneous">Miscellaneous</option>
-                     </select>
-                </div>
- 
-                <div class='content-child-4'>
-                    <label for='amount'> Amount: </label>
-                    <input id='amount' type='number' name='amount'/>
-                 </div>
-             </div>
-
-             <div class='content-parent-4'>
-                <button id='add-button'> Add </button>
-             </div>
-        </div>
-    </form>
-
-    <div class='table-container'>
-
-        <div class='filter-container'>
-            <label for='filter' class='expense-filter'> Filter Expense</label>
-            <select id='filter' name='expense-filter' >
-                <option value="all">All</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="food">Food</option>
-                <option value="housing">Housing</option>
-                <option value="insurance-medical">Insurance & Medical</option>
-                <option value="transporation">Transporation</option>
-                <option value="ultilities">Utilities</option>
-                <option value="miscellaneous">Miscellaneous</option>
-            </select> 
-
-            <button id='clear-all' class='clear-all'> clear all </button>
-        </div>
-
-        <table id='table-main'>
-            <thead>
-                <tr>
-                    <th class='header-delete'>
-                        <div id='delete-btn' class="fa fa-trash fa-lg"></div>
-                    </th>
-                    <th class='header-date'>Date</th>
-                    <th class='header-description'>Description</th>
-                    <th class='header-location'>Location</th>
-                    <th class='header-catagory'>Catagory</th>
-                    <th class='header-amount'>Amount $</th>
-                </tr>
-            </thead>
-            <tbody id='expense-content'>
-                <tr class='default-row'>
-                    <td colspan='6' class='default-data'> Add your expense here</td>
-                </tr>
-            </tbody>
-            <tfoot>
-
-            </tfoot>
-        </table>
+  <form class='form-container'>
+    <div class='form-header'>
+      <h1>Expense Tracker</h1>
     </div>
 
-    <script src="script.js"></script>
+    <div class='form-content'>
+      <div class='content-parent-1'>
+        <div class='content-child-0'>
+          <label for='date'> Date: </label>
+          <input id="date" type='date' name="date" required />
+        </div>
+      </div>
+
+      <div class='content-parent-2'>
+        <div class='content-child-1'>
+          <label for='description'> Description: </label>
+          <input id="description" type="text" name="description" />
+        </div>
+
+        <div class='content-child-2'>
+          <label for='location'> Location: </label>
+          <input id="location" type='text' name='location' />
+        </div>
+      </div>
+
+      <div class='content-parent-3'>
+        <div class='content-child-3'>
+          <label for='expense-catagory'> Catagory: </label>
+          <select name='expense-catagory' id='catagory'>
+            <option value="select">Select</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="food">Food</option>
+            <option value="housing">Housing</option>
+            <option value="insurance-medical">Insurance & Medical</option>
+            <option value="transporation">Transporation</option>
+            <option value="ultilities">Utilities</option>
+            <option value="miscellaneous">Miscellaneous</option>
+          </select>
+        </div>
+
+        <div class='content-child-4'>
+          <label for='amount'> Amount: </label>
+          <input id='amount' type='number' name='amount' />
+        </div>
+      </div>
+
+      <div class='content-parent-4'>
+        <button id='add-button'> Add </button>
+      </div>
+    </div>
+  </form>
+
+  <div class='table-container'>
+
+    <div class='filter-container'>
+      <label for='filter' class='expense-filter'> Filter Expense</label>
+      <select id='filter' name='expense-filter'>
+        <option value="all">All</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="food">Food</option>
+        <option value="housing">Housing</option>
+        <option value="insurance-medical">Insurance & Medical</option>
+        <option value="transporation">Transporation</option>
+        <option value="ultilities">Utilities</option>
+        <option value="miscellaneous">Miscellaneous</option>
+      </select>
+
+      <button id='clear-all' class='clear-all'> clear all </button>
+    </div>
+
+    <table id='table-main'>
+      <thead>
+        <tr>
+          <th class='header-delete'>
+            <div id='delete-btn' class="fa fa-trash fa-lg"></div>
+          </th>
+          <th class='header-date'>Date</th>
+          <th class='header-description'>Description</th>
+          <th class='header-location'>Location</th>
+          <th class='header-catagory'>Catagory</th>
+          <th class='header-amount'>Amount $</th>
+        </tr>
+      </thead>
+      <tbody id='expense-content'>
+        <tr class='default-row'>
+          <td colspan='6' class='default-data'> Add your expense here</td>
+        </tr>
+      </tbody>
+      <tfoot>
+
+      </tfoot>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
