@@ -1,8 +1,8 @@
 # Expense Tracker
 
-This simple expense tracker is built with vanila JS.
+This simple expense tracker written entirely in pure Javascript, HTML and CSS.
 
-You can track your expense [here](https://naamnamm.github.io/expense-tracker-app/)
+Track your expense [here](https://naamnamm.github.io/expense-tracker-app/)
 
 <img src="https://user-images.githubusercontent.com/53867191/80553561-56a66080-8998-11ea-8635-ff72d6b2e618.PNG" height="300" width="500"/>
 
