@@ -9,13 +9,13 @@ Don't worry, I have got you [here](https://naamnamm.github.io/expense-tracker-ap
 ## Instruction
 - Enter your expense.
 - All expenses are saved locally, and available every time a user visits the site.
-- User have an option to clear all expense. This will perminently remove items from local storage.
+- User has an option to clear all expense. This will permanently remove items from local storage.
 
 
 ## Summary
-With this application, I have learn new JS concept (such as working with table). I'm more comfortable building and reusing the DOM and functions. Also, I had so much fun styling this application.
+With this application, I have learned new JS concepts (such as working with tables, and rows). I'm more comfortable building and reusing the DOM and functions. Also, I had so much fun styling this application.
 
-As I have progressed through my journey as a software developer, I've fall in love with the art of crafting the code. Every little detail matters. I'll be continuing to improve my craftmenship.
+As I have progressed through my journey as a software developer, I've fallen in love with the art of crafting the code. Every little detail matters. I'll be continuing to improve my craftsmanship.
 
 ## Author
 - Naam Pondpat - [LinkedIn](https://www.linkedin.com/in/pondpat-tohsanguanpun-638153150/)
