@@ -4,10 +4,10 @@ let addButton = document.getElementById('add-button');
 addButton.addEventListener('click', addExpense);
 
 let filterInput = document.getElementById('filter');
-filterInput.addEventListener('change', filterExpense)
+filterInput.addEventListener('change', filterExpense);
 
 let deleteBtn = document.getElementById('delete-btn');
-deleteBtn.addEventListener('click', deleteExpense)
+deleteBtn.addEventListener('click', deleteExpense);
 
 let clearAllBtn = document.getElementById('clear-all');
 clearAllBtn.addEventListener('click', clearAllExpenses);
@@ -57,7 +57,7 @@ function addExpense(e) {
 function renderExpense(expense) {
 	let tbody = document.getElementById('expense-content');
 
-	let tr = tbody.insertRow(-1)
+	let tr = tbody.insertRow(-1);
 	tr.id = expense.id;
 
 	let td0 = tr.insertCell(0);
@@ -124,8 +124,7 @@ function calculateTotal() {
 		if (row.lastElementChild.previousElementSibling.classList.contains(filteredCatagory)) {
 			total += amount;
 		}
-	}
-	);
+	});
 
 	document.getElementById('total').innerText = `$${total}`;
 }
@@ -135,21 +134,21 @@ function removeDefaultRow() {
 		if (row.classList.contains('default-row')) {
 			row.remove();
 		}
-	})
+	});
 }
 
 function filterExpense(e) {
 	let filteredCatagory = e.target.value;
 
 	Array.from(rows).forEach(row => {
-		let catagoryCell = row.lastElementChild.previousElementSibling
+		let catagoryCell = row.lastElementChild.previousElementSibling;
 		if (catagoryCell.classList.contains(filteredCatagory)) {
 			row.style.display = 'table-row';
 		} else {
 			row.style.display = 'none';
 		}
-	}
-	)
+	});
+	
 	calculateTotal();
 }
 
@@ -161,7 +160,7 @@ function deleteExpense(e) {
 		} else {
 			arrayOfCurrentId.push(Number(row.id));
 		}
-	})
+	});
 
 	calculateTotal();
 
@@ -185,11 +184,11 @@ function renderDefaultRow() {
 	if (Array.from(rows).length === 0) {
 		let tbody = document.getElementById('expense-content');
 
-		let tr = tbody.insertRow(0)
+		let tr = tbody.insertRow(0);
 		tr.className = 'default-row';
 
 		let td0 = tr.insertCell(0);
-		td0.setAttribute('colspan', '6')
+		td0.setAttribute('colspan', '6');
 		td0.className = 'default-data';
 		td0.innerText = 'Add your expense here';
 	}
@@ -201,9 +200,9 @@ function clearAllExpenses(e) {
 	if (response === true) {
 		Array.from(rows).forEach(row => {
 			if (row.lastElementChild.previousElementSibling.classList.contains('all')) {
-				row.remove()
+				row.remove();
 			}
-		})
+		});
 	}
 
 	removeTotalRow();
@@ -231,8 +230,8 @@ function getDate() {
 		'October',
 		'November',
 		'December'
-	]
+	];
 
-	return `${months[month]} ${day}, ${year}`
+	return `${months[month]} ${day}, ${year}`;
 }
 
